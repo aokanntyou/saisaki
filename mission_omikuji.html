@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>おみくじ</title>
+    <style>
+        /* ページ全体の背景に画像を設定 */
+        body {
+            background-image: url('background-image.jpg'); /* 画像ファイルのパスを指定 */
+            background-size: cover; /* 画像をページ全体に拡大 */
+            background-position: center; /* 画像の中央をページの中央に配置 */
+            background-repeat: no-repeat; /* 画像が繰り返し表示されないようにする */
+            font-family: Arial, sans-serif;
+            height: 100vh; /* ビューポートの高さに合わせる */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 見出しのスタイル - 画面上部に配置 */
+        h1 {
+            text-align: center;
+            color: black; /* タイトル文字の色を黒に設定 */
+            position: absolute;
+            top: 20px;
+            font-size: 36px; /* フォントサイズを大きく */
+        }
+
+        /* 結果表示部分のスタイル */
+        #omikuji {
+            margin-top: 20px;
+            font-size: 30px; /* 結果の文字を大きくする */
+            color: #000000; /* 色を調整して見やすく */
+            text-align: center;
+            transition: font-size 0.5s ease, color 0.5s ease; /* 結果表示のエフェクト */
+        }
+
+        /* ボタンの基本スタイル */
+        #omikujiButton {
+            padding: 20px 40px; /* ボタンの大きさ */
+            font-size: 24px; /* ボタン内の文字サイズ */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #ff0000; /* 初期色 */
+            color: black; /* 文字の色を黒に設定 */
+            transition: background-color 0.5s; /* 色の変化を滑らかに */
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        /* ボタンの色を変えるためのアニメーション */
+        @keyframes colorChange {
+            0% { background-color: #ff0000; }
+            16% { background-color: #ff7f00; }
+            33% { background-color: #ffff00; }
+            50% { background-color: #00ff00; }
+            66% { background-color: #0000ff; }
+            83% { background-color: #4b0082; }
+            100% { background-color: #8b00ff; }
+        }
+
+        /* ボタンが7色に光るアニメーション */
+        #omikujiButton {
+            animation: colorChange 2s infinite;
+        }
+
+        /* 結果が大きくなるエフェクト */
+        .big-result {
+            font-size: 50px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>おみくじを引いてみましょう！</h1>
+    <div id="omikuji">ここに結果が表示されます</div>
+    <div style="text-align: center;">
+        <button id="omikujiButton" onclick="omikujishow()">おみくじを引く</button>
+    </div>
+
+    <!-- 音声の要素を追加 -->
+    <audio id="sound" src="click-sound.mp3" preload="auto"></audio>
+
+    <script>
+        // おみくじの結果の配列
+        var omikuji = ["大吉", "中吉", "小吉", "吉", "末吉", "凶", "大凶"];
+        
+        // おみくじの結果を表示し、音を再生する関数
+        function omikujishow() {
+            // ランダムに数値を生成
+            var number = Math.floor(Math.random() * omikuji.length);
+            
+            // 結果のメッセージを取得
+            var message = omikuji[number];
+            
+            // 結果を表示する要素を取得して、テキストを更新
+            var object = document.getElementById("omikuji");
+            object.innerText = message;
+            object.classList.add("big-result"); // 結果を大きくするエフェクトを追加
+            
+            // 音を再生
+            var sound = document.getElementById("sound");
+            sound.play();
+        }
+    </script>
+</body>
+</html>
